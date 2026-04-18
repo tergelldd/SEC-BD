@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("****FLASHCARD****");
+        System.out.println("**** FLASHCARD ****");
 
         for (String arg : args) {
             if (arg.equals("--help")) {
@@ -114,7 +114,7 @@ public class Main {
     }
 
     private static void printHelp() {
-        System.out.println("Ашиглах заавар: flashcard <cards-file> [options]");
+        System.out.println("flashcard <cards-file> [options]");
         System.out.println("--help                Тусламж харуулах");
         System.out.println("--order <order>       Дараалал (random, worst-first, recent-mistakes-first)");
         System.out.println("--repetitions <num>   Зөв хариулах оролдлогын тоо");

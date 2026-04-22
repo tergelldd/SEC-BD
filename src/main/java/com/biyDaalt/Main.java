@@ -82,12 +82,17 @@ public class Main {
             int totalQuestions = 0;
 
             cards = organizer.organize(cards);
+
             for (Card card : cards) {
+
+                if (card.getCorrectCount() >= reps) continue;
+
                 String q = invert ? card.getAnswer() : card.getQuestion();
                 String a = invert ? card.getQuestion() : card.getAnswer();
 
                 System.out.print("Question: " + q + " -> ");
-                String userAns = sc.nextLine();
+                String userAns = sc.nextLine().trim();
+
                 totalQuestions++;
 
                 if (userAns.equalsIgnoreCase(a)) {
@@ -98,18 +103,33 @@ public class Main {
                     card.recordResult(false);
                 }
             }
+
             long endTime = System.currentTimeMillis();
-            double avgTime = ((endTime - startTime) / 1000.0) / totalQuestions;
+            double avgTime = (totalQuestions == 0)
+                    ? 0
+                    : ((endTime - startTime) / 1000.0) / totalQuestions;
 
             new AchievementManager().check(cards, avgTime);
 
+            boolean done = true;
+            for (Card c : cards) {
+                if (c.getCorrectCount() < reps) {
+                    done = false;
+                    break;
+                }
+            }
+
+            if (done) {
+                System.out.println("\nALL CARDS COMPLETED! 🎉");
+                break;
+            }
 
             System.out.println("Type '-1' to stop or press Enter to continue");
             String input = sc.nextLine();
-            if (input.equals("-1")) {
-                break;
-            }
-            System.out.println("\n Next round starting...\n");
+
+            if (input.equals("-1")) break;
+
+            System.out.println("\nNext round starting...\n");
         }
     }
 
